@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Heart</title>
+    <style>
+        body {
+            background-color: red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .heart {
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            position: relative;
+            transform: rotate(-45deg);
+            animation: heartbeat 1s infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart:before {
+            top: -50px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: 50px;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1) rotate(-45deg); }
+            40% { transform: scale(1.2) rotate(-45deg); }
+            55% { transform: scale(1) rotate(-45deg); }
+            60% { transform: scale(1.2) rotate(-45deg); }
+            65% { transform: scale(1) rotate(-45deg); }
+            70% { transform: scale(1.2) rotate(-45deg); }
+            100% { transform: scale(1) rotate(-45deg); }
+        }
+
+        .message {
+            position: absolute;
+            top: 60%;
+            font-size: 24px;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .show-message {
+            opacity: 1;
+            animation: textAnimation 1s ease-in-out forwards;
+        }
+
+        @keyframes textAnimation {
+            0% { opacity: 0; transform: scale(0.5); }
+            35% { opacity: 1; transform: scale(1.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* Floating Hearts Animation */
+        .floating-heart {
+            position: absolute;
+            color: pink;
+            font-size: 20px;
+            animation: fly 4s linear forwards;
+        }
+
+        @keyframes fly {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-500px) scale(1.5); }
+        }
+
+        /* Flower Styling */
+        .flower {
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 1s ease-in-out, transform 2s ease-in-out;
+        }
+
+        .stem {
+            width: 10px;
+            height: 10;
+            background: green;
+            transition: height 2s ease-in-out;
+        }
+
+        .leaves {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            gap: 2px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out 1.5s;
+        }
+
+    
+        .bloom {
+            font-size: 1px;
+            position: relative;
+            top: -130px; /* Flower appears on top of the stem */
+            transition: font-size 1s ease-in-out 1.5s;
+        }
+
+        .grow {
+            opacity: 2;
+            transform: scale(1.0);
+        }
+
+        .grow .stem {
+            height: 50px;
+        }
+
+        .grow .leaves {
+            opacity: 50px;
+        }
+
+        .grow .bloom {
+            font-size: 90px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="heart" onclick="showEffects()"></div>
+    <div class="message" id="message">I love you. Happy Valentine's Day, my beautiful girl Lea.</div>
+
+    <!-- Flowers on the left -->
+    <div class="flower" id="flower1" style="left: 25%;">
+        <div class="stem"></div>
+        <div class="leaves">
+            <div class="leaf" style="transform: rotate(-30deg);"></div>
+            <div class="leaf" style="transform: rotate(30deg);"></div>
+        </div>
+        <div class="bloom">🌷</div>
+    </div>
+
+    <div class="flower" id="flower2" style="left: 40%;">
+        <div class="stem"></div>
+        <div class="leaves">
+            <div class="leaf" style="transform: rotate(-30deg);"></div>
+            <div class="leaf" style="transform: rotate(30deg);"></div>
+        </div>
+        <div class="bloom">🌻</div>
+    </div>
+
+    <!-- Flowers on the right -->
+    <div class="flower" id="flower3" style="right: 40%;">
+        <div class="stem"></div>
+        <div class="leaves">
+            <div class="leaf" style="transform: rotate(-30deg);"></div>
+            <div class="leaf" style="transform: rotate(30deg);"></div>
+        </div>
+        <div class="bloom">🌹</div>
+    </div>
+
+    <div class="flower" id="flower4" style="right: 25%;">
+        <div class="stem"></div>
+        <div class="leaves">
+            <div class="leaf" style="transform: rotate(-30deg);"></div>
+            <div class="leaf" style="transform: rotate(30deg);"></div>
+        </div>
+        <div class="bloom">🌺</div>
+    </div>
+
+    <script>
+        function showEffects() {
+            // Show the message again
+            let message = document.getElementById("message");
+            message.classList.remove("show-message"); 
+            void message.offsetWidth; // Trigger reflow to restart animation
+            message.classList.add("show-message");
+
+            // Floating hearts in the background
+            for (let i = 30; i > 0; i--) {
+                let heart = document.createElement("div");
+                heart.innerHTML = "💗";
+                heart.classList.add("floating-heart");
+                document.body.appendChild(heart);
+
+                let x = Math.random() * window.innerWidth;
+                let y = Math.random() * window.innerHeight + 200;
+
+                heart.style.left = `${x}px`;
+                heart.style.top = `${y}px`;
+                heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+                heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }
+
+            // Make flowers grow
+            document.getElementById("flower1").classList.add("grow");
+            document.getElementById("flower2").classList.add("grow");
+            document.getElementById("flower3").classList.add("grow");
+            document.getElementById("flower4").classList.add("grow");
+        }
+    </script>
+
+</body>
+</html>
