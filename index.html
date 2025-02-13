@@ -25,13 +25,14 @@
 
         .buttons {
             display: flex;
-            gap: 20px;
+            flex-direction: column; /* Stack buttons vertically */
+            gap: 15px;
             margin-top: 20px;
         }
 
         .btn {
             font-size: 24px;
-            padding: 15px 30px;
+            padding: 15px 40px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
@@ -50,7 +51,7 @@
         .no-btn {
             background-color: gray;
             color: white;
-            position: absolute;
+            position: relative; /* No longer absolute, starts below "Yes" */
         }
     </style>
 </head>
@@ -70,8 +71,9 @@
         }
 
         function moveNoButton() {
-            let x = Math.random() * (window.innerWidth - 100);
-            let y = Math.random() * (window.innerHeight - 50);
+            let x = Math.random() * (window.innerWidth - 150);
+            let y = Math.random() * (window.innerHeight - 100);
+            document.querySelector(".no-btn").style.position = "absolute";
             document.querySelector(".no-btn").style.left = `${x}px`;
             document.querySelector(".no-btn").style.top = `${y}px`;
         }
